@@ -4,10 +4,10 @@ import 'package:test_app/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({super.key, required this.meal, required this.onSelectMeal});
 
   final Meal meal;
-
+  final void Function(Meal meal) onSelectMeal;
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
         meal.complexity.name.substring(1);
@@ -21,19 +21,24 @@ class MealItem extends StatelessWidget {
   @override
   Widget build(context) {
     return Card(
-      margin: EdgeInsets.all(8),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onSelectMeal(meal);
+        },
         child: Stack(
           children: [
-            FadeInImage(
-              placeholder: MemoryImage(kTransparentImage),
-              image: NetworkImage(meal.imageUrl),
-              fit: BoxFit.cover,
-              height: 200,
-              width: double.infinity,
+            Hero(
+              tag: meal.imageUrl,
+              child: FadeInImage(
+                placeholder: MemoryImage(kTransparentImage),
+                image: NetworkImage(meal.imageUrl),
+                fit: BoxFit.cover,
+                height: 200,
+                width: double.infinity,
+              ),
             ),
             Positioned(
                 bottom: 0,

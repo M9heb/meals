@@ -14,7 +14,7 @@ class MealItemTrait extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         SizedBox(
-          width: 8,
+          width: 6,
         ),
         Text(
           label,
