@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_app/data/dummy_data.dart';
-import 'package:test_app/models/meal.dart';
+import 'package:test_app/providers/favorites_provider.dart';
+// import 'package:test_app/data/dummy_data.dart';
+// import 'package:test_app/models/meal.dart';
 import 'package:test_app/providers/meals_provider.dart';
 import 'package:test_app/screens/categories.dart';
 import 'package:test_app/screens/filters.dart';
@@ -26,29 +27,22 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> _favoriteMeals = [];
+  // final List<Meal> _favoriteMeals = [];
 
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  }
-
-  void _toggleFavoriteMeals(Meal meal) {
-    final isExisting = _favoriteMeals.contains(meal);
-    setState(() {
-      if (isExisting) {
-        _showInfoMessage("Deleted from favorites list.");
-        _favoriteMeals.remove(meal);
-      } else {
-        _showInfoMessage("Successfully added to favorites list.");
-        _favoriteMeals.add(meal);
-      }
-    });
-  }
+  // void _toggleFavoriteMeals(Meal meal) {
+  //   final isExisting = _favoriteMeals.contains(meal);
+  //   setState(() {
+  //     if (isExisting) {
+  //       _showInfoMessage("Deleted from favorites list.");
+  //       _favoriteMeals.remove(meal);
+  //     } else {
+  //       _showInfoMessage("Successfully added to favorites list.");
+  //       _favoriteMeals.add(meal);
+  //     }
+  //   });
+  // }
 
   void _selectPage(int index) {
     setState(() {
@@ -91,14 +85,17 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       return true;
     }).toList();
     Widget activeScreen = CategoriesScreen(
-      onToggleFavorite: _toggleFavoriteMeals,
+      // onToggleFavorite: _toggleFavoriteMeals,
       availableMeals: availableMeals,
     );
     String activeScreenTitle = "Categories";
 
     if (_selectedPageIndex == 1) {
+      final favoriteMeals = ref.watch(favoriteMealsProvider);
       activeScreen = MealsScreen(
-          meals: _favoriteMeals, onToggleFavorite: _toggleFavoriteMeals);
+        meals: favoriteMeals,
+        // onToggleFavorite: _toggleFavoriteMeals,
+      );
       activeScreenTitle = "Favorite meals";
     }
 
