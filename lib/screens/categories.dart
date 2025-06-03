@@ -25,7 +25,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(microseconds: 300),
+      duration: const Duration(milliseconds: 200),
       lowerBound: 0,
       upperBound: 1,
     );
@@ -83,7 +83,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 end: Offset(0, 0),
               ).animate(
                 CurvedAnimation(
-                    parent: _animationController, curve: Curves.easeOut),
+                    parent: _animationController, curve: Curves.easeOutQuad),
               ),
               child: FadeTransition(
                 opacity: _animationController,
