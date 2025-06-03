@@ -85,7 +85,10 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 CurvedAnimation(
                     parent: _animationController, curve: Curves.easeOut),
               ),
-              child: child,
+              child: FadeTransition(
+                opacity: _animationController,
+                child: child,
+              ),
             ));
   }
 }
